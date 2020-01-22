@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Ksiegarnia.Models.BookModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Twój koszyk</h1>
+
+<table class="table">
+    <thead>
+        @if (Model != null)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Publisher)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReleaseDate)
+                </th>
+                <th></th>
+            </tr>
+        }
+        </thead>
+    <tbody>
+        @if (Model!=null) {
+            foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+                </td>
+            </tr>
+            }
+        }
+        else
+        {
+            <br/>
+            <h2>Wybierz książki do zamówienia!</h2>
+        }
+    </tbody>
+</table>
