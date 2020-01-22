@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ksiegarnia.Migrations.Order
 {
     [DbContext(typeof(OrderContext))]
-    [Migration("20200121164533_OrderMigration")]
+    [Migration("20200122233202_OrderMigration")]
     partial class OrderMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,46 +20,6 @@ namespace Ksiegarnia.Migrations.Order
                 .HasAnnotation("ProductVersion", "3.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Ksiegarnia.Models.BookModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.Property<int?>("OrderModelId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal?>("Price")
-                        .IsRequired()
-                        .HasColumnType("decimal(5,2)");
-
-                    b.Property<string>("Publisher")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.Property<DateTime?>("ReleaseDate")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderModelId");
-
-                    b.ToTable("BookModel");
-                });
 
             modelBuilder.Entity("Ksiegarnia.Models.OrderModel", b =>
                 {
@@ -92,6 +52,9 @@ namespace Ksiegarnia.Migrations.Order
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("IdOfOrderedBooks")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
@@ -104,13 +67,6 @@ namespace Ksiegarnia.Migrations.Order
                     b.HasKey("Id");
 
                     b.ToTable("Order");
-                });
-
-            modelBuilder.Entity("Ksiegarnia.Models.BookModel", b =>
-                {
-                    b.HasOne("Ksiegarnia.Models.OrderModel", null)
-                        .WithMany("OrderedBooks")
-                        .HasForeignKey("OrderModelId");
                 });
 #pragma warning restore 612, 618
         }

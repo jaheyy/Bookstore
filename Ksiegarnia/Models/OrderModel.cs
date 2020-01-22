@@ -20,7 +20,7 @@ namespace Ksiegarnia.Models
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
         public bool Done { get; set; }
-        public BookModel[] OrderedBooks { get; set; }
+        public string IdOfOrderedBooks  { get; set; }
         public double Amount { get; set; }
     }
 }
