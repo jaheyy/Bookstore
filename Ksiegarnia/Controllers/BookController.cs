@@ -29,6 +29,7 @@ namespace Ksiegarnia.Controllers
             basketList = new List<BookModel>();
         }
 
+        [ResponseCache(Duration = 60)]
         [AllowAnonymous]
         public async Task<IActionResult> Index(string searchString)
         {
@@ -173,7 +174,6 @@ namespace Ksiegarnia.Controllers
             }
             HttpContext.Session.SetString("basket", HttpContext.Session.GetString("basket") + id.ToString() + ";");
             HttpContext.Session.SetInt32("amount", amount + Convert.ToInt32(bookModel.Price * 100));
-            var qweamount = HttpContext.Session.GetInt32("amount");
             return RedirectToAction(nameof(Index));
         }
     }
