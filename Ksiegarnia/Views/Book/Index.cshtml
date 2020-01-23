@@ -4,66 +4,55 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Nasze książki</h1>
+    <div class="container my-2">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <h1>Nasze książki</h1>
+                <p>
+                    <a class="text-orange" asp-action="Create">Dodaj nową książkę</a>
+                </p>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="float-md-right">
+                    <form asp-controller="Book" asp-action="Index" method="get" class="form-inline">
+                        <input class="form-control" type="text" name="searchString" placeholder="Tytuł" onfocus="this.placeholder=''" onblur="this.placeholder='Tytuł'" style="max-width: 70%;">
+                        <button class="btn btn-outline-dark" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-<p>
-    <a asp-action="Create">Dodaj nową książkę</a>
-</p>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+            <div class="col-xl-2 col-md-3 col-sm-4 mb-3 col-6">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="text-dark">
+                        <img src="~/img/books/ksiazka.jpg" class="img-fluid" />
+                        <p class="h6 py-0 mt-3 mb-0">
+                            <b>@Html.DisplayFor(modelItem => item.Title)</b>
+                        </p>
+                    </a>
+                    <p class="py-0 mt-0 mb-2 text-muted">
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </p>
+                <div class="row">
+                    <div class="col-8 my-auto">
+                        <p class="py-0 my-0 text-orange">
+                            <b> @Html.DisplayFor(modelItem => item.Price) zł</b>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <div class="float-right">
+                            <a asp-action="AddToBasket" asp-route-id="@item.Id">
+                                <button class="btn btn-sm btn-outline-orange">
+                                    <i class="fas fa-shopping-basket"></i>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
 
-<form asp-controller="Book" asp-action="Index" method="get">
-    <p>
-        Tytuł: <input type="text" name="searchString">
-        <input type="submit" value="Szukaj" />
-    </p>
-</form>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Publisher)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReleaseDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Author)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Publisher)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReleaseDate)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edycja</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Szczegóły</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Usuń</a> |
-                    <a asp-action="AddToBasket" asp-route-id="@item.Id">Dodaj do koszyka</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
