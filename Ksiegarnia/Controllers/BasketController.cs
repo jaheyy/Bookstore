@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Ksiegarnia.Data;
 using Ksiegarnia.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Ksiegarnia.Controllers
 {
