@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Ksiegarnia.Data;
 using Ksiegarnia.Models;
@@ -16,13 +14,13 @@ namespace Ksiegarnia.Controllers
     [Authorize]
     public class OrderController : Controller
     {
-        private readonly OrderContext _context;
+        private readonly ApplicationDbContext _context;
         private bool OrderModelExists(int id)
         {
             return _context.Order.Any(e => e.Id == id);
         }
 
-        public OrderController(OrderContext context)
+        public OrderController(ApplicationDbContext context)
         {
             _context = context;
         }

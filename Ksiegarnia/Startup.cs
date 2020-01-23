@@ -25,10 +25,8 @@ namespace Ksiegarnia
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //Konfiguracja stanu sesji 
             services.AddDistributedMemoryCache();
 
             services.AddMvc()
@@ -42,7 +40,6 @@ namespace Ksiegarnia
                 options.Cookie.IsEssential = true;
             });
 
-            //OAuth dla facebooka i google
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
@@ -66,14 +63,12 @@ namespace Ksiegarnia
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            //Rejestracja kontekstu bazy danych
-            services.AddDbContext<BookContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("BookContext")));
-            services.AddDbContext<OrderContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("OrderContext")));
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("BookContext")));
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("OrderContext")));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -84,7 +79,6 @@ namespace Ksiegarnia
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();

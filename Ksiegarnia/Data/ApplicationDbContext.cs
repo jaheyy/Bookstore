@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Ksiegarnia.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,5 +10,9 @@ namespace Ksiegarnia.Data
             : base(options)
         {
         }
+        public DbSet<BookModel> Book { get; set; }
+        public DbSet<OrderModel> Order { get; set; }
+
+
     }
 }

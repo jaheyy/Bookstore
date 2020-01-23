@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Ksiegarnia.Data;
 using Ksiegarnia.Models;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Ksiegarnia.Controllers
@@ -16,17 +14,15 @@ namespace Ksiegarnia.Controllers
     [Authorize]
     public class BookController : Controller
     {
-        private readonly BookContext _context;
-        private List<BookModel> basketList;
+        private readonly ApplicationDbContext _context;
         private bool BookModelExists(int id)
         {
             return _context.Book.Any(e => e.Id == id);
         }
 
-        public BookController(BookContext context)
+        public BookController(ApplicationDbContext context)
         {
             _context = context;
-            basketList = new List<BookModel>();
         }
 
         [ResponseCache(Duration = 60)]
@@ -35,7 +31,7 @@ namespace Ksiegarnia.Controllers
         {
             var books = from b in _context.Book select b;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchString))
             {
                 books = books.Where(s => s.Title.Contains(searchString));
             }

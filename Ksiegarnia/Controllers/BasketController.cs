@@ -4,20 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using Ksiegarnia.Data;
 using Ksiegarnia.Models;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Ksiegarnia.Controllers
 {
-    [Authorize]
     public class BasketController : Controller
     {
-        private readonly BookContext _context;
+        private readonly ApplicationDbContext _context;
         List<BookModel> booksInBasket;
 
-        public BasketController(BookContext context)
+        public BasketController(ApplicationDbContext context)
         {
             _context = context;
             booksInBasket = new List<BookModel>();
