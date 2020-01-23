@@ -23,6 +23,11 @@ namespace Ksiegarnia.Models
         [StringLength(30, ErrorMessage = "Nazwa wydawnictwa może zawierać do 30 znaków")]
         public string Publisher { get; set; }
 
+        [Display(Name = "Opis")]
+        [Required(ErrorMessage = "Opis jest wymagany")]
+        [StringLength(500, ErrorMessage = "Opis może zawierać do 500 znaków")]
+        public string Description { get; set; }
+
         [Display(Name = "Cena (PLN)")]
         [Required(ErrorMessage = "Ustal cenę książki")]
         [Range(0.01, 200.00, ErrorMessage = "Ustal cenę od 0,01 do 200,00 PLN")]
