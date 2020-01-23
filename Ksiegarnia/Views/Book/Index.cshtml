@@ -25,9 +25,9 @@
         <div class="row">
             @foreach (var item in Model)
             {
-            <div class="col-xl-2 col-md-3 col-sm-4 mb-3 col-6">
+            <div class="col-xl-2 col-md-3 col-sm-4 mb-3 col-6 ">
                     <a asp-action="Details" asp-route-id="@item.Id" class="text-dark">
-                        <img src="~/img/books/ksiazka.jpg" class="img-fluid" />
+                        <img src="@item.Image" class="img-fluid" />
                         <p class="h6 py-0 mt-3 mb-0">
                             <b>@Html.DisplayFor(modelItem => item.Title)</b>
                         </p>

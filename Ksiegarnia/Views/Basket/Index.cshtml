@@ -1,66 +1,91 @@
 ﻿@model IEnumerable<Ksiegarnia.Models.BookModel>
+@using Microsoft.AspNetCore.Http;
+
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Twój koszyk</h1>
+    <div class="container">
+        <h1>Twój koszyk</h1>
 
-<table class="table">
-    <thead>
         @if (Model != null)
         {
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Author)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Publisher)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ReleaseDate)
-                </th>
-                <th></th>
-            </tr>
-        }
-        </thead>
-    <tbody>
-        @if (Model!=null) {
-            foreach (var item in Model)
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Author)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Publisher)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReleaseDate)
-                </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
-                </td>
-            </tr>
-            <a asp-action="Create" asp-controller="Order">Zamów!</a>
-            }
+            <div class="table mx-3">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="border-0 bg-light">
+                                <div class="p-2 px-3 text-uppercase">
+                                    @Html.DisplayNameFor(model => model.Title)
+                                </div>
+                            </th>
+                            <th scope="col" class="border-0 bg-light">
+                                <div class="p-2 px-3 text-uppercase">
+                                    @Html.DisplayNameFor(model => model.Price)
+                                </div>
+                            </th>
+                            <th scope="col" class="border-0 bg-light">
+                                <div class="p-2 px-3 text-uppercase">
+                                    Usuń
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <th scope="row" class="border-0">
+                                    <div class="p-2">
+                                        <img src="@Html.DisplayFor(modelItem => item.Image)" alt="Okładka książki" width="70" class="img-fluid rounded shadow-sm">
+                                        <div class="ml-3 d-inline-block align-middle">
+                                            <h5 class="mb-0"> <a asp-action="Details" asp-controller="Book" asp-route-id="@item.Id" class="text-dark d-inline-block align-middle">@Html.DisplayFor(modelItem => item.Title)</a></h5><span class="text-muted font-weight-normal font-italic d-block">@Html.DisplayFor(modelItem => item.Author)</span>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td class="border-0 align-middle">
+                                    <div class="ml-4">
+                                        <b>@Html.DisplayFor(modelItem => item.Price)</b>
+                                    </div>
+                                </td>
+                                <td class="border-0 align-middle">
+                                    <div class="ml-4">
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="text-orange"><i class="fas fa-minus-square"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <hr />
+            <div class="d-flex justify-content-end align-items-center">
+                <div class="h6">
+                    Do zapłaty:
+                    @if (Context.Session.GetInt32("amount") != null)
+                    {
+
+                        int amountInt = (int)Context.Session.GetInt32("amount");
+                        decimal amountFloat = (decimal)amountInt;
+                        amountFloat /= 100;
+                        amountFloat = Math.Round(amountFloat, 2);
+                        
+                    <span>@amountFloat.ToString("0.00")</span>
+                    }
+                    else
+                    {
+                        <span>0.00</span>
+                    }
+                    zł
+                </div>
+                <a asp-action="Create" asp-controller="Order" class="text-orange ml-4"><div class="btn btn-outline-dark">Złóż zamówienie</div></a>
+            </div>
         }
         else
         {
-            <br/>
+            <br />
             <h2>Wybierz książki do zamówienia!</h2>
         }
-    </tbody>
-</table>
+    </div>
+
