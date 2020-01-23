@@ -13,7 +13,7 @@
             <h2 class="mb-3">Skontaktuj się z nami</h2>
         </header>
         <div class="col-lg-8 mb-5">
-            <form asp-action="SendMessage" id="contact-form">
+            <form asp-controller="Home" asp-action="SendEmail" method="post" id="contact-form">
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group">
@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-12">
                         <div class="form-group">
-                            <textarea class="form-control w-100" name="message" cols="30" rows="9" onfocus="this.placeholder=''" onblur="this.placeholder='Wpisz swoją wiadomość'" placeholder="Wpisz swoją wiadomość." style="resize:none"></textarea>
+                            <textarea class="form-control w-100" name="body" cols="30" rows="9" onfocus="this.placeholder=''" onblur="this.placeholder='Wpisz swoją wiadomość'" placeholder="Wpisz swoją wiadomość." style="resize:none"></textarea>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -37,7 +37,7 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group mt-2">
-                            <button class="btn btn-outline-dark w-100">Wyślij</button>
+                            <button type="submit" class="btn btn-outline-dark w-100">Wyślij</button>
                         </div>
                     </div>
                 </div>
