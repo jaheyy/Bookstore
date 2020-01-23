@@ -10,7 +10,7 @@ namespace Ksiegarnia.Models
 
         [Display(Name = "Tytuł")]
         [Required(ErrorMessage ="Tytuł jest wymagany")]
-        [StringLength(30, ErrorMessage = "Tytuł może zawierać do 30 znaków")]
+        [StringLength(60, ErrorMessage = "Tytuł może zawierać do 60 znaków")]
         public string Title { get; set; }
 
         [Display(Name = "Autor")]
