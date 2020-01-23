@@ -64,12 +64,15 @@ namespace Ksiegarnia.Controllers
         {
             if (ModelState.IsValid)
             {
+                var session = HttpContext.Session;
                 orderModel.Date = DateTime.Today;
                 orderModel.Done = false;
-                orderModel.IdOfOrderedBooks = HttpContext.Session.GetString("basket");
-                orderModel.Amount = (double) HttpContext.Session.GetInt32("amount") / 100;
+                orderModel.IdOfOrderedBooks = session.GetString("basket");
+                orderModel.Amount = (double)session.GetInt32("amount") / 100;
                 _context.Add(orderModel);
                 await _context.SaveChangesAsync();
+                session.SetString("basket", "");
+                session.SetInt32("amount", 0);
                 return RedirectToAction("index", "home");
             }
             return View(orderModel);
