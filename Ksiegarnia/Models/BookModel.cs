@@ -28,6 +28,11 @@ namespace Ksiegarnia.Models
         [StringLength(500, ErrorMessage = "Opis może zawierać do 500 znaków")]
         public string Description { get; set; }
 
+        [Display(Name = "Ścieżka do obrazu")]
+        [Required(ErrorMessage = "Ścieżka do obrazu jest wymagany")]
+        [StringLength(500, ErrorMessage = "Ścieżka do obrazu może zawierać do 500 znaków")]
+        public string Image { get; set; }
+
         [Display(Name = "Cena (PLN)")]
         [Required(ErrorMessage = "Ustal cenę książki")]
         [Range(0.01, 200.00, ErrorMessage = "Ustal cenę od 0,01 do 200,00 PLN")]

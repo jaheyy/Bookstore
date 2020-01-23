@@ -17,6 +17,7 @@ namespace Ksiegarnia.Migrations
                     Author = table.Column<string>(maxLength: 30, nullable: false),
                     Publisher = table.Column<string>(maxLength: 30, nullable: false),
                     Description = table.Column<string>(maxLength: 500, nullable: false),
+                    Image = table.Column<string>(maxLength: 500, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
                     ReleaseDate = table.Column<DateTime>(nullable: false)
                 },
