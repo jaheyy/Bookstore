@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +25,9 @@ namespace Ksiegarnia.Controllers
         public BookController(ApplicationDbContext context)
         {
             _context = context;
-            memoryCache = new MemoryCache(new MemoryCacheOptions());
+            var memoryCacheOptions = new MemoryCacheOptions();
+            memoryCacheOptions.ExpirationScanFrequency = TimeSpan.FromMinutes(20);
+            memoryCache = new MemoryCache(memoryCacheOptions);
         }
 
         [AllowAnonymous]
@@ -35,8 +36,6 @@ namespace Ksiegarnia.Controllers
             if (memoryCache.Get("books") == null)
             {
                 books = from b in _context.Book select b;
-                var cashEntryOptions = new MemoryCacheEntryOptions();
-                cashEntryOptions.SetSlidingExpiration(TimeSpan.FromMinutes(20));
                 memoryCache.Set("books", books);
             }
 
