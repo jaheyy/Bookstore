@@ -39,9 +39,9 @@
                 <span asp-validation-for="City" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Country" class="control-label"></label>
-                <input asp-for="Country" class="form-control" />
-                <span asp-validation-for="Country" class="text-danger"></span>
+                <label asp-for="ZIPcode" class="control-label"></label>
+                <input asp-for="ZIPcode" class="form-control" />
+                <span asp-validation-for="ZIPcode" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
@@ -64,6 +64,11 @@
                 </label>
             </div>
             <div class="form-group">
+                <label asp-for="IdOfOrderedBooks" class="control-label"></label>
+                <input asp-for="IdOfOrderedBooks" class="form-control" />
+                <span asp-validation-for="IdOfOrderedBooks" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Amount" class="control-label"></label>
                 <input asp-for="Amount" class="form-control" />
                 <span asp-validation-for="Amount" class="text-danger"></span>
@@ -79,3 +84,6 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

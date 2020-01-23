@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Ksiegarnia.Migrations
 {
-    public partial class MyFirstMigration : Migration
+    public partial class BookMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,10 +13,11 @@ namespace Ksiegarnia.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    Author = table.Column<string>(nullable: true),
-                    Publisher = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false),
+                    Title = table.Column<string>(maxLength: 60, nullable: false),
+                    Author = table.Column<string>(maxLength: 30, nullable: false),
+                    Publisher = table.Column<string>(maxLength: 30, nullable: false),
+                    Description = table.Column<string>(maxLength: 500, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
                     ReleaseDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>

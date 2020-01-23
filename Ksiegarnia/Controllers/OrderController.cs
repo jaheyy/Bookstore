@@ -7,25 +7,33 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Ksiegarnia.Data;
 using Ksiegarnia.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+
 
 namespace Ksiegarnia.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly OrderContext _context;
+        private bool OrderModelExists(int id)
+        {
+            return _context.Order.Any(e => e.Id == id);
+        }
 
         public OrderController(OrderContext context)
         {
             _context = context;
         }
 
-        // GET: Order
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Order.ToListAsync());
         }
 
-        // GET: Order/Details/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,29 +51,31 @@ namespace Ksiegarnia.Controllers
             return View(orderModel);
         }
 
-        // GET: Order/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Order/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Address,Street,City,Country,Email,PhoneNumber,Date,Done,Amount")] OrderModel orderModel)
+        public async Task<IActionResult> Create(OrderModel orderModel)
         {
             if (ModelState.IsValid)
             {
+                orderModel.Date = DateTime.Today;
+                orderModel.Done = false;
+                orderModel.IdOfOrderedBooks = HttpContext.Session.GetString("basket");
+                orderModel.Amount = (double) HttpContext.Session.GetInt32("amount") / 100;
                 _context.Add(orderModel);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("index", "home");
             }
             return View(orderModel);
         }
 
-        // GET: Order/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,12 +91,10 @@ namespace Ksiegarnia.Controllers
             return View(orderModel);
         }
 
-        // POST: Order/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Address,Street,City,Country,Email,PhoneNumber,Date,Done,Amount")] OrderModel orderModel)
+        public async Task<IActionResult> Edit(int id, OrderModel orderModel)
         {
             if (id != orderModel.Id)
             {
@@ -116,7 +124,7 @@ namespace Ksiegarnia.Controllers
             return View(orderModel);
         }
 
-        // GET: Order/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,7 +142,7 @@ namespace Ksiegarnia.Controllers
             return View(orderModel);
         }
 
-        // POST: Order/Delete/5
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -143,11 +151,6 @@ namespace Ksiegarnia.Controllers
             _context.Order.Remove(orderModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool OrderModelExists(int id)
-        {
-            return _context.Order.Any(e => e.Id == id);
         }
     }
 }

@@ -9,9 +9,11 @@ using Ksiegarnia.Data;
 using Ksiegarnia.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ksiegarnia.Controllers
 {
+    [Authorize]
     public class BookController : Controller
     {
         private readonly BookContext _context;
@@ -27,6 +29,8 @@ namespace Ksiegarnia.Controllers
             basketList = new List<BookModel>();
         }
 
+        [ResponseCache(Duration = 60)]
+        [AllowAnonymous]
         public async Task<IActionResult> Index(string searchString)
         {
             var books = from b in _context.Book select b;
@@ -38,6 +42,7 @@ namespace Ksiegarnia.Controllers
             return View(await books.ToListAsync());
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -55,11 +60,13 @@ namespace Ksiegarnia.Controllers
             return View(bookModel);
         }
 
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             return View();
         }
-        
+
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(BookModel bookModel)
@@ -73,6 +80,7 @@ namespace Ksiegarnia.Controllers
             return View(bookModel);
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -89,6 +97,7 @@ namespace Ksiegarnia.Controllers
             return View(bookModel);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, BookModel bookModel)
@@ -121,6 +130,7 @@ namespace Ksiegarnia.Controllers
             return View(bookModel);
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,6 +148,7 @@ namespace Ksiegarnia.Controllers
             return View(bookModel);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -148,11 +159,21 @@ namespace Ksiegarnia.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        [AllowAnonymous]
         public async Task<IActionResult> AddToBasket(int id)
         {
+            var bookModel = await _context.Book.FirstOrDefaultAsync(m => m.Id == id);
+            int amount;
+            try
+            {
+                amount = (int)HttpContext.Session.GetInt32("amount");
+            }
+            catch (InvalidOperationException)
+            {
+                amount = 0;
+            }
             HttpContext.Session.SetString("basket", HttpContext.Session.GetString("basket") + id.ToString() + ";");
-
+            HttpContext.Session.SetInt32("amount", amount + Convert.ToInt32(bookModel.Price * 100));
             return RedirectToAction(nameof(Index));
         }
     }
