@@ -8,9 +8,12 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <h1>Nasze książki</h1>
+                @if (User.IsInRole("Administrator"))
+                {
                 <p>
                     <a class="text-orange" asp-action="Create">Dodaj nową książkę</a>
                 </p>
+                }
             </div>
             <div class="col-md-6 mb-3">
                 <div class="float-md-right">
