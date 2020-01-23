@@ -1,8 +1,29 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "O nas";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
 </div>
+
+<section class="mt-4 py-5" style="background-color: #fff7ef;">
+    <div class="container">
+        <div class="row align-content-center">
+            <div class="col-md-6">
+                <img class="img-fluid" src="~/img/about_us.jpg" alt="">
+            </div>
+            <div class="col-md-6">
+                <div class="about_text">
+                    <h2 class="mt-1">FIRMA Z PASJĄ</h2>
+                    <h4 class="mt-1" style="color: #ff8b23">
+                        RODZINNA TRADYCJA<br>
+                        OD 1995
+                    </h4>
+                    <h5 class="mt-4" style="font-family: Roboto; font-weight: normal">Znajdziecie u nas światowe bestsellery, ale także niszowe książki, a to wszystko w przystępnej cenie.</h5>
+                    <h5 class="mt-2" style="font-family: Roboto; font-weight: normal">Dbamy o naszych klientów, dlatego mamy dla was karty stałych gości.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
