@@ -29,6 +29,8 @@ namespace Ksiegarnia
         {
             services.AddDistributedMemoryCache();
 
+            services.AddMemoryCache();
+
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddSessionStateTempDataProvider();

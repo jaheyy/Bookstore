@@ -8,6 +8,7 @@ using Ksiegarnia.Data;
 using Ksiegarnia.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Ksiegarnia.Controllers
 {
@@ -15,6 +16,8 @@ namespace Ksiegarnia.Controllers
     public class BookController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private MemoryCache memoryCache;
+        private IQueryable<BookModel> books;
         private bool BookModelExists(int id)
         {
             return _context.Book.Any(e => e.Id == id);
@@ -23,18 +26,25 @@ namespace Ksiegarnia.Controllers
         public BookController(ApplicationDbContext context)
         {
             _context = context;
+            memoryCache = new MemoryCache(new MemoryCacheOptions());
         }
 
-        [ResponseCache(Duration = 60)]
         [AllowAnonymous]
         public async Task<IActionResult> Index(string searchString)
         {
-            var books = from b in _context.Book select b;
+            if (memoryCache.Get("books") == null)
+            {
+                books = from b in _context.Book select b;
+                var cashEntryOptions = new MemoryCacheEntryOptions();
+                cashEntryOptions.SetSlidingExpiration(TimeSpan.FromMinutes(20));
+                memoryCache.Set("books", books);
+            }
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 books = books.Where(s => s.Title.Contains(searchString));
             }
+
             return View(await books.ToListAsync());
         }
 
