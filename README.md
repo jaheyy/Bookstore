@@ -1,8 +1,22 @@
 # Bookstore
 > ASP.NET based monolite online book store application
 
+## Table of contents
+* [General info](#general-info)
+* [License](#license)
+* [Screenshots](#screenshots)
+* [Technologies](#technologies)
+* [Setup](#Setup)
+* [Features](#Features)
+* [Status](#status)
+* [Contact](#Contact)
+
 ## General info
 Bookstrore is a student project web, monolite project based on ASP.NET.
+
+## License
+Copyright (c) 2020 Damian Goleniewski, Błażej Tempski, Arkadiusz Wawrzyniak  
+This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
 ## Screenshots
 <img src="/bookstore_1.png" width="600"/>
@@ -16,10 +30,6 @@ Bookstrore is a student project web, monolite project based on ASP.NET.
 * Entity Framework
 * Razor Web Pages
 * Bootstrap 4
-
-## License
-Copyright (c) 2020 Damian Goleniewski, Błażej Tempski, Arkadiusz Wawrzyniak  
-This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
 ## Setup
 To setup a project, you need to clone the repo or download its content and open up the main folder in Microsoft Visual Studio with ASP.NET installed.
